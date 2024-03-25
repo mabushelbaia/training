@@ -1,0 +1,83 @@
+{% extends "auctions/layout.html" %} {% block title %}{{ listing.title }}{%endblock %} 
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow">
+                {% if message %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+                {% if listing.image %}
+                <img src="{{ listing.image }}" class="card-img-top" alt="Listing Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ listing.title }}</h5>
+                    <p class="card-text">{{ listing.description }}</p>
+                    <p class="card-text">Price: ${{ listing.price }}</p>
+                    <p class="card-text">Category: {{ listing.category }}</p>
+                    <p class="card-text">Created by: {{ listing.user }}</p>
+                    <p class="card-text">Created at: {{ listing.created_at }}</p>
+                    {% if listing.status == False %}
+                        <p class="card-text">Status: Closed</p>
+                        <p class="card-text">Winner: {{ listing.highest_bidder.username }}</p>
+                    {% else %}
+                        <p class="card-text">Status: Open</p>
+                        {% if user.is_authenticated %}
+                            {% if user.username == listing.user.username %}
+                                <a href="{% url 'close' listing.id %}" class="btn btn-primary">Close Listing</a>
+                            {% else %}
+                                {% if in_wishlist %}
+                        
+                                    <form action="{% url 'wishlist' listing_id=listing.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">Remove from Watchlist</button>
+                                    </form>
+                                {% else %}
+                                    <form action="{% url 'wishlist' listing_id=listing.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">Add to Watchlist</button>
+                                    </form>
+                                    <form action="{% url 'bid' listing_id=listing.id %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="bid">Bid</label>
+                                            <input type="number" class="form-control" id="bid" name="bid" min="{{ listing.price|add:1 }}" value="{{ listing.price|add:1}}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Place Bid</button>
+                                    </form>
+                                {% endif %}
+                            {% endif %}
+                    {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<h2>
+    Comments
+</h2>
+{% if user.is_authenticated %}
+    <form action="{% url 'comment' listing_id=listing.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="comment">Comment</label>
+            <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Comment</button>
+    </form>
+{% endif %}
+{% for comment in comments %}
+    <div class="card mb-4 shadow">
+        <div class="card-body">
+            <p class="card-text">{{ comment.comment }}</p>
+            <p class="card-text">By: {{ comment.user }}</p>
+            <p class="card-text">At: {{ comment.created_at }}</p>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}
