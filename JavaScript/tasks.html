@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* BEGIN: Custom CSS */
+        body {
+            padding: 20px;
+            background-color: #171717;
+            color: white;
+        }
+        
+        .list-group-item {
+            background-color: #343a40;
+            border-color: #343a40;
+            color: white;
+        }
+        /* END: Custom CSS */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tasks</h1>
+        <ul class="list-group">
+            <li class="list-group-item">Task 1</li>
+            <li class="list-group-item">Task 2</li>
+            <li class="list-group-item">Task 3</li>
+        </ul>
+        <form class="mt-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Enter a new task">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary" disabled="true">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector("form");
+            document.querySelector("input").onkeyup = () => {
+            if (document.querySelector(".form-control").value.length === 0) {
+                    document.querySelector("button").disabled = true;
+                } else {
+                    document.querySelector("button").disabled = false;
+                }
+            }
+            form.onsubmit = (event) => {
+                event.preventDefault();
+                const task = document.querySelector("input").value;
+                if (task !== "") {
+                    const li = document.createElement("li");
+                    li.classList.add("list-group-item");
+                    li.textContent = task;
+                    document.querySelector("ul").append(li);
+                    document.querySelector("input").value = "";
+
+
+                }
+            };
+
+            return false;
+        });
+    </script>
+</body>
+</html>

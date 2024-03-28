@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Colors</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const colors = document.querySelector("#colors");
+            const colorSelect = document.querySelector("#color-select");
+            colors.style.color = colorSelect.value;
+            colorSelect.onchange = () => {
+                colors.style.color = colorSelect.value;
+            };
+        });
+    </script>
+  </head>
+  <body style="background-color: #171717; color: white;">
+    <h1 id="colors">Colors</h1>
+    <select id="color-select">
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+    </select>
+  </body>
+</html>

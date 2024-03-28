@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("https://api.exchangeratesapi.io/latest?base=USD'") // The API requires a Key to work, so it won't work heref
+            .then(response => response.json())
+            .then(data => {
+                const currency = document.querySelector("#currency");
+                currency.textContent = `1 USD is equal to ${data.rates.CAD} CAD`;
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1 id="currency"></h1>
+</body>
+</html>

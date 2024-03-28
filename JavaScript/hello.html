@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector("form");
+            form.onsubmit = (event) => {
+                // don't allow empty name
+                event.preventDefault();
+                if (!document.querySelector("#name").value) {
+                    return;
+                }
+                const name = document.querySelector("#name").value;
+                if (name !== "") document.querySelector("h1").textContent = `Hello, ${name}!`;
+            };
+        });
+    </script>
+
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    <form>
+        <input autofocus id="name" type="text" placeholder="Enter your name">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
